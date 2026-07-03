@@ -74,4 +74,20 @@ class AuthController extends Controller
         'message' => 'Sesión cerrada correctamente.'
     ], 200);
 }
+public function update(Request $request)
+{
+    $user = $request->user();
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+    ]);
+
+    $user->update($validated);
+
+    return response()->json([
+        'message' => 'Usuario actualizado correctamente.',
+        'user' => $user
+    ], 200);
+}
 }
