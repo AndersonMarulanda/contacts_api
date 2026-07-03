@@ -9,13 +9,12 @@ use Illuminate\Http\Request;
 class ContactController extends Controller
 {
     public function index(Request $request)
-    {
-        $contacts = $request->user()->contacts;
+{
+    $contacts = Contact::where('user_id', $request->user()->id)
+        ->paginate(5);
 
-        return response()->json([
-            'contacts' => $contacts
-        ], 200);
-    }
+    return response()->json($contacts, 200);
+}
 
     public function store(Request $request)
 {
