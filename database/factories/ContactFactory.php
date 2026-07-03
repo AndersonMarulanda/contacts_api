@@ -13,6 +13,7 @@ class ContactFactory extends Factory
             'user_id' => User::factory(),
             'nombre' => fake()->name(),
             'telefono' => fake()->unique()->numerify('3#########'),
+            'email' => fake()->unique()->safeEmail(),
         ];
     }
 }

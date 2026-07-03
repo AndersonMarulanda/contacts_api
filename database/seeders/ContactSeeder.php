@@ -14,7 +14,7 @@ class ContactSeeder extends Seeder
             Contact::factory()
                 ->count(5)
                 ->create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
                 ]);
         });
     }
