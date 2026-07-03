@@ -7,13 +7,13 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-test('lista los contactos del usuario autenticado', function () {
+test('lista los contactos con paginación', function () {
 
     $user = User::factory()->create();
 
     Sanctum::actingAs($user);
 
-    Contact::factory()->count(3)->create([
+    Contact::factory()->count(12)->create([
         'user_id' => $user->id,
     ]);
 
@@ -21,5 +21,13 @@ test('lista los contactos del usuario autenticado', function () {
 
     $response->assertStatus(200);
 
-    $response->assertJsonCount(3, 'data');
+    $response->assertJsonStructure([
+        'current_page',
+        'data',
+        'per_page',
+        'total',
+        'last_page',
+    ]);
+
+    $response->assertJsonCount(5, 'data');
 });
